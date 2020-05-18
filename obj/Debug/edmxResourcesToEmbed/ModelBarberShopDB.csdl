@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BSTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ClientsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RegistrationsSet" Relationship="Self.FK_RegistrationsSet_ClientsSet" FromRole="ClientsSet" ToRole="RegistrationsSet" />
+  </EntityType>
+  <EntityType Name="RegistrationsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdWorker" Type="Int32" Nullable="false" />
+    <Property Name="IdClent" Type="Int32" Nullable="false" />
+    <Property Name="IdService" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="ClientsSet" Relationship="Self.FK_RegistrationsSet_ClientsSet" FromRole="RegistrationsSet" ToRole="ClientsSet" />
+    <NavigationProperty Name="WorkersSet" Relationship="Self.FK_RegistrationsSet_RegistrationsSet1" FromRole="RegistrationsSet" ToRole="WorkersSet" />
+    <NavigationProperty Name="ServicesSet" Relationship="Self.FK_RegistrationsSet_ServicesSet" FromRole="RegistrationsSet" ToRole="ServicesSet" />
+  </EntityType>
+  <EntityType Name="ServicesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int64" />
+    <NavigationProperty Name="RegistrationsSet" Relationship="Self.FK_RegistrationsSet_ServicesSet" FromRole="ServicesSet" ToRole="RegistrationsSet" />
+  </EntityType>
+  <EntityType Name="WorkersSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RegistrationsSet" Relationship="Self.FK_RegistrationsSet_RegistrationsSet1" FromRole="WorkersSet" ToRole="RegistrationsSet" />
+  </EntityType>
+  <Association Name="FK_RegistrationsSet_ClientsSet">
+    <End Role="ClientsSet" Type="Self.ClientsSet" Multiplicity="1" />
+    <End Role="RegistrationsSet" Type="Self.RegistrationsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClientsSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationsSet">
+        <PropertyRef Name="IdClent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegistrationsSet_RegistrationsSet1">
+    <End Role="WorkersSet" Type="Self.WorkersSet" Multiplicity="1" />
+    <End Role="RegistrationsSet" Type="Self.RegistrationsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkersSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationsSet">
+        <PropertyRef Name="IdWorker" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegistrationsSet_ServicesSet">
+    <End Role="ServicesSet" Type="Self.ServicesSet" Multiplicity="1" />
+    <End Role="RegistrationsSet" Type="Self.RegistrationsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServicesSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationsSet">
+        <PropertyRef Name="IdService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BSTEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ClientsSet" EntityType="Self.ClientsSet" />
+    <EntitySet Name="RegistrationsSet" EntityType="Self.RegistrationsSet" />
+    <EntitySet Name="ServicesSet" EntityType="Self.ServicesSet" />
+    <EntitySet Name="WorkersSet" EntityType="Self.WorkersSet" />
+    <AssociationSet Name="FK_RegistrationsSet_ClientsSet" Association="Self.FK_RegistrationsSet_ClientsSet">
+      <End Role="ClientsSet" EntitySet="ClientsSet" />
+      <End Role="RegistrationsSet" EntitySet="RegistrationsSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegistrationsSet_RegistrationsSet1" Association="Self.FK_RegistrationsSet_RegistrationsSet1">
+      <End Role="WorkersSet" EntitySet="WorkersSet" />
+      <End Role="RegistrationsSet" EntitySet="RegistrationsSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegistrationsSet_ServicesSet" Association="Self.FK_RegistrationsSet_ServicesSet">
+      <End Role="ServicesSet" EntitySet="ServicesSet" />
+      <End Role="RegistrationsSet" EntitySet="RegistrationsSet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

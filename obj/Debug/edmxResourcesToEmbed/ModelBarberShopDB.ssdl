@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище BSTModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ClientsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="MiddleName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="RegistrationsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdWorker" Type="int" Nullable="false" />
+    <Property Name="IdClent" Type="int" Nullable="false" />
+    <Property Name="IdService" Type="int" Nullable="false" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ServicesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Price" Type="bigint" />
+  </EntityType>
+  <EntityType Name="WorkersSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="MiddleName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_RegistrationsSet_ClientsSet">
+    <End Role="ClientsSet" Type="Self.ClientsSet" Multiplicity="1" />
+    <End Role="RegistrationsSet" Type="Self.RegistrationsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClientsSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationsSet">
+        <PropertyRef Name="IdClent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegistrationsSet_RegistrationsSet1">
+    <End Role="WorkersSet" Type="Self.WorkersSet" Multiplicity="1" />
+    <End Role="RegistrationsSet" Type="Self.RegistrationsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkersSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationsSet">
+        <PropertyRef Name="IdWorker" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegistrationsSet_ServicesSet">
+    <End Role="ServicesSet" Type="Self.ServicesSet" Multiplicity="1" />
+    <End Role="RegistrationsSet" Type="Self.RegistrationsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServicesSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistrationsSet">
+        <PropertyRef Name="IdService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище BSTModelContainer">
+    <EntitySet Name="ClientsSet" EntityType="Self.ClientsSet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegistrationsSet" EntityType="Self.RegistrationsSet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServicesSet" EntityType="Self.ServicesSet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkersSet" EntityType="Self.WorkersSet" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_RegistrationsSet_ClientsSet" Association="Self.FK_RegistrationsSet_ClientsSet">
+      <End Role="ClientsSet" EntitySet="ClientsSet" />
+      <End Role="RegistrationsSet" EntitySet="RegistrationsSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegistrationsSet_RegistrationsSet1" Association="Self.FK_RegistrationsSet_RegistrationsSet1">
+      <End Role="WorkersSet" EntitySet="WorkersSet" />
+      <End Role="RegistrationsSet" EntitySet="RegistrationsSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegistrationsSet_ServicesSet" Association="Self.FK_RegistrationsSet_ServicesSet">
+      <End Role="ServicesSet" EntitySet="ServicesSet" />
+      <End Role="RegistrationsSet" EntitySet="RegistrationsSet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
