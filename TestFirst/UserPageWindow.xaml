@@ -1,0 +1,23 @@
+﻿<Window x:Class="TestFirst.UserPageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestFirst"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Приложение для пользоветелей" Height="350" Width="600">
+    <Grid Background="#ffdadada">
+        <Border MinWidth="400" Margin="15" Background="#fff" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"></DropShadowEffect>
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="Окно пользователя" FontSize="30" FontWeight="Bold" Margin="0,0,0,20"></TextBlock>
+                <ListView x:Name="listOfUsers" Margin="30">
+                    
+                </ListView>
+            </StackPanel>
+
+        </Border>
+    </Grid>
+</Window>
